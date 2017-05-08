@@ -157,8 +157,8 @@ class ImageView(ViewBase):
         self.rois.add(roi)
         self.currentRoi = roi
 
-#        roi.sigRegionChanged.connect(self.updateHist)
-        roi.sigRegionChangeFinished.connect(self.updateHist)
+        roi.sigRegionChanged.connect(self.updateHist)
+        #roi.sigRegionChangeFinished.connect(self.updateHist)
         self.updateHist()
 
 

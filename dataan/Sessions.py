@@ -34,7 +34,7 @@ class SessionBase(object) :
         pass
 
 
-class Session(SessionBase):
+class ImageSession(SessionBase):
     def __init__(self):
         super().__init__()
         self.data = None
@@ -73,7 +73,8 @@ class EditSession(SessionBase):
         super().__init__()
         self.view = QtGui.QTextEdit()
         self.container = ViewBase()
-        self.container.setWindowIcon(QGui.QIcon("icons/text.png"))
+        self.container.resize(800, 600)
+        self.container.setWindowIcon(QtGui.QIcon("icons/text.png"))
         self.container.setCentralWidget(self.view)
         self.view.setParent(self.container)
         self.container.session = self
@@ -163,8 +164,8 @@ class SessionMngr(object) :
         sess_dict = dict()
         imageExt = ["png", "jpg", "xpm"]
         txtExt = ["txt", "py"]
-        sess_dict = {ext : se for ext, se in chain( zip(imageExt, map( lambda x : Session, imageExt)),
-                                                    zip(txtExt, map( lambda x : EditSession, txtExt)))}
+        sess_dict = {ext : se for ext, se in chain(zip(imageExt, map(lambda x : ImageSession, imageExt)),
+                                                   zip(txtExt, map( lambda x : EditSession, txtExt)))}
 
         def compose(title, extensions):
             return title + " (" + " ".join(map(lambda e : "*."+e, extensions))+")"
