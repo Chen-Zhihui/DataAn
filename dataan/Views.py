@@ -101,29 +101,19 @@ class ViewBase(QtGui.QMainWindow) :
         super().closeEvent(event)
         self.session = None
 
-    def paintEvent(self, event):
-        super().paintEvent(event)
-        if ViewMngr.currentViewBase() is self :
-            r = QtCore.QRect(QtCore.QPoint(0,0),self.size()).adjusted(10, 10, -10, -10)
-            painter = QtGui.QPainter(self)
-            painter.setPen(QtGui.QColor(0, 0, 255))
-            painter.drawRect(r)
-
-    #def mouseReleaseEvent(self, event):
-    #    super().mouseReleaseEvent(event)
-    #    ViewMngr.instance().resetCurrentView(self)
-
     def hitIt(self):
-        self.session.hitIt();
+        self.session.hitIt()
 
 
 class ImageView(ViewBase):
     def __init__(self):
         super().__init__()
         self.setWindowIcon(QtGui.QIcon("icons/image.png"))
+
         self.view = pg.GraphicsLayoutWidget()
-        super().setCentralWidget(self.view)
         self.view.setParent(self)
+        self.setCentralWidget(self.view)
+
         self.img = pg.ImageItem()
         self.data = None
         self.rois = set()
@@ -131,9 +121,9 @@ class ImageView(ViewBase):
         self.plot = self.view.addPlot()
         self.plot.addItem(self.img)
 
-        roi = self.toolbar.addAction("Roi")
-        roi.setIcon(QtGui.QIcon("icons/rect.png"))
-        roi.triggered.connect(self.addRoi)
+        rect = self.toolbar.addAction("Roi")
+        rect.setIcon(QtGui.QIcon("icons/rect.png"))
+        rect.triggered.connect(self.addRect)
 
         clear = self.toolbar.addAction("Clear")
         clear.setIcon(QtGui.QIcon("icons/clear.png"))
@@ -144,7 +134,7 @@ class ImageView(ViewBase):
         self.data = data
         self.img.setImage(self.data)
 
-    def addRoi(self):
+    def addRect(self):
         if self.currentRoi is not None:
             return
 
@@ -167,9 +157,9 @@ class ImageView(ViewBase):
         self.rois.add(roi)
         self.currentRoi = roi
 
-#        roi.sigRegionChanged.connect(self.updateHit)
-        roi.sigRegionChangeFinished.connect(self.updateHit)
-        self.updateHit()
+#        roi.sigRegionChanged.connect(self.updateHist)
+        roi.sigRegionChangeFinished.connect(self.updateHist)
+        self.updateHist()
 
 
     def hist(self):
@@ -180,7 +170,7 @@ class ImageView(ViewBase):
         y, x = np.histogram(selected, bins=np.linspace(-10, 300, 200))
         return y,x
 
-    def updateHit(self):
+    def updateHist(self):
         if HistView.instance() is not None:
             y,x = self.hist()
             HistView.updateHist(x, y)
@@ -191,7 +181,7 @@ class ImageView(ViewBase):
         self.currentRoi = None
         map(lambda x : self.plot.removeItem(x), self.rois)
         self.rois.clear()
-        self.updateHit()
+        self.updateHist()
 
 
 class HistView(QtGui.QMainWindow):

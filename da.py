@@ -37,7 +37,7 @@ class ImageWin(QtGui.QMainWindow) :
         HistView.create()
         imageView = ViewMngr.instance().currentImageView()
         if imageView is not None:
-            imageView.updateHit()
+            imageView.updateHist()
 
 app = pg.mkQApp()
 ViewMngr.instance()
