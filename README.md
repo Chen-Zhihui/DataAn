@@ -4,7 +4,7 @@
 
 [pynrrd](https://github.com/mhe/pynrrd)
 
-## Scren shot
+## Screen shot
 
 ![screenshot](./doc/screenshot.png)
 

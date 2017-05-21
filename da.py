@@ -38,12 +38,13 @@ class ImageWin(QtGui.QMainWindow) :
         if imageView is not None:
             imageView.updateHist()
 
-app = pg.mkQApp()
-ViewMngr.instance()
+if __name__ == '__main__':
+    app = pg.mkQApp()
+    ViewMngr.instance()
 
-pg.setConfigOptions(imageAxisOrder='row-major')
-mw = ImageWin()
-mw.move(0,0)
-mw.resize(600, 300)
-mw.show()
-QtGui.QApplication.instance().exec_()
+    pg.setConfigOptions(imageAxisOrder='row-major')
+    mw = ImageWin()
+    mw.move(0,0)
+    mw.resize(600, 300)
+    mw.show()
+    QtGui.QApplication.instance().exec_()

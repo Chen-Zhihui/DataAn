@@ -5,7 +5,7 @@ from pyqtgraph.Qt import QtCore, QtGui
 import numpy as np
 
 from .Views import *
-from .Sessions import *
+from .ImageSession import *
 
 
 class VolSession(SessionBase):
@@ -24,9 +24,9 @@ class VolSession(SessionBase):
         self.j = 0
         self.k = 0
 
-        self.iAct = QtGui.QAction("I", self)
-        self.jAct = QtGui.QAction("J", self)
-        self.kAct = QtGui.QAction("K", self)
+        self.iAct = QtGui.QAction(QtGui.QIcon("icons/view-front.svg"),"I", self)
+        self.jAct = QtGui.QAction(QtGui.QIcon("icons/view-left.svg"),"J", self)
+        self.kAct = QtGui.QAction(QtGui.QIcon("icons/view-top.svg"),"K", self)
 
         self.acts = [self.iAct, self.jAct, self.kAct]
 
@@ -155,7 +155,7 @@ class VolSession(SessionBase):
             self.iview.slider.setValue(self.i)
             self.iview.toolbar.addWidget(self.iview.slider)
             def sliderMoved(v) :
-                self.iview.setImageData(self.data[v, :, :])
+                self.iview.setImageData(self.data[:, :, v])
             self.iview.slider.sliderMoved.connect(sliderMoved)
 
             def mouseMoved(evt) :

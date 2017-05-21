@@ -4,8 +4,9 @@ import pyqtgraph as pg
 from pyqtgraph.Qt import QtCore, QtGui
 import numpy as np
 
-from .Sessions import *
+from .ImageSession import *
 from .VolSession import *
+from .EditSession import *
 
 class SessionMngr(object) :
 
