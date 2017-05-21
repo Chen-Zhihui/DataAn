@@ -8,16 +8,15 @@ from pyqtgraph.Qt import QtCore, QtGui
 import numpy as np
 from dataan import *
 
-
 class ImageWin(QtGui.QMainWindow) :
     def __init__(self):
         super().__init__()
         self.setWindowTitle('ImageAn')
         self.setWindowIcon(QtGui.QIcon("icons/image.png"))
         self.setMaximumWidth(800)
-        self.setMinimumWidth(800)
+        #self.setMinimumWidth(800)
         self.setMaximumHeight(200)
-        self.setMinimumHeight(200)
+        #self.setMinimumHeight(200)
 
         self.toolbar = QtGui.QToolBar()
         self.addToolBar(self.toolbar)
@@ -44,5 +43,7 @@ ViewMngr.instance()
 
 pg.setConfigOptions(imageAxisOrder='row-major')
 mw = ImageWin()
+mw.move(0,0)
+mw.resize(600, 300)
 mw.show()
 QtGui.QApplication.instance().exec_()

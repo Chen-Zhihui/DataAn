@@ -102,7 +102,8 @@ class ViewBase(QtGui.QMainWindow) :
         self.session = None
 
     def hitIt(self):
-        self.session.hitIt()
+        if self.session is not None:
+            self.session.hitIt()
 
 
 class ImageView(ViewBase):
@@ -120,6 +121,13 @@ class ImageView(ViewBase):
         self.currentRoi = None
         self.plot = self.view.addPlot()
         self.plot.addItem(self.img)
+        self.vb = self.plot.getViewBox()
+
+        self.vLine = pg.InfiniteLine(angle=90, movable=True)
+        self.hLine = pg.InfiniteLine(angle=0, movable=True)
+        self.plot.addItem(self.vLine, ignoreBounds=True)
+        self.plot.addItem(self.hLine, ignoreBounds=True)
+        self.plot.scene().sigMouseMoved.connect(self.mouseMoved)
 
         rect = self.toolbar.addAction("Roi")
         rect.setIcon(QtGui.QIcon("icons/rect.png"))
@@ -129,6 +137,17 @@ class ImageView(ViewBase):
         clear.setIcon(QtGui.QIcon("icons/clear.png"))
         clear.triggered.connect(self.clear)
 
+    def mouseMoved(self,evt):
+        pos = evt
+        #pos = evt[0]  ## using signal proxy turns original arguments into a tuple
+        if self.plot.sceneBoundingRect().contains(pos):
+            mousePoint = self.vb.mapSceneToView(pos)
+            self.vLine.setPos(mousePoint.x())
+            self.hLine.setPos(mousePoint.y())
+
+    def updateCW(self, x, y):
+        self.vLine.setPos(x)
+        self.hLine.setPos(y)
 
     def setImageData(self, data):
         self.data = data
@@ -161,13 +180,15 @@ class ImageView(ViewBase):
         #roi.sigRegionChangeFinished.connect(self.updateHist)
         self.updateHist()
 
-
     def hist(self):
         if self.currentRoi is not None:
             selected = self.currentRoi.getArrayRegion(self.data, self.img)
         else :
             selected = self.data
-        y, x = np.histogram(selected, bins=np.linspace(-10, 300, 200))
+        max = np.amax(selected)
+        min = np.amin(selected)
+
+        y, x = np.histogram(selected, bins=np.linspace(min, max, 200))
         return y,x
 
     def updateHist(self):
@@ -191,6 +212,7 @@ class HistView(QtGui.QMainWindow):
         self.setCentralWidget(self.widget)
         self.setWindowTitle("Histogram")
         self.setWindowIcon(QtGui.QIcon("icons/histogram.png"))
+        self.resize(400, 300)
 
     def plot(self, x, y):
         if x is None:
