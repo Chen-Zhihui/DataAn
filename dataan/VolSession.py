@@ -42,53 +42,55 @@ class VolSession(SessionBase):
         self.jAct.toggled.connect(self.showJView)
         self.kAct.toggled.connect(self.showKView)
 
-    def openFile(self, file):
-        import nrrd
-        readdata, options = nrrd.read(file)
-        sizes = list(readdata.shape)
-        print(readdata.shape)
-        print(options)
-        print(len(sizes))
-
-        if len(sizes) == 2:
-            return False
-
-        if len(sizes) == 4:
-            self.data = readdata[0, :, :, :]
-            self.imax = sizes[3]
-            self.jmax = sizes[2]
-            self.kmax = sizes[1]
-
-        if len(sizes) == 3:
-            self.data = readdata[:, :, :]
-            self.imax = sizes[2]
-            self.jmax = sizes[1]
-            self.kmax = sizes[0]
-
-        self.imax = self.imax-1
-        self.jmax = self.jmax-1
-        self.kmax = self.kmax-1
+    def openFile(self, file, test = False):
+        if test :
+            print(file)
+            import nrrd
+            readdata, options = nrrd.read(file)
+            sizes = list(readdata.shape)
+            print(readdata.shape)
+            print(options)
+            print(len(sizes))
+    
+            if len(sizes) == 2:
+                return False
+    
+            if len(sizes) == 4:
+                self.data = readdata[0, :, :, :]
+                self.imax = sizes[3]
+                self.jmax = sizes[2]
+                self.kmax = sizes[1]
+    
+            if len(sizes) == 3:
+                self.data = readdata[:, :, :]
+                self.imax = sizes[2]
+                self.jmax = sizes[1]
+                self.kmax = sizes[0]
+        else :
+            self.imax = 128
+            self.jmax = 256
+            self.kmax = 196
+            
+            x1 = np.linspace(-30, 10, self.imax)[:, np.newaxis, np.newaxis]
+            x2 = np.linspace(-20, 20, self.imax)[:, np.newaxis, np.newaxis]
+            y = np.linspace(-30, 10, self.jmax)[np.newaxis, :, np.newaxis]
+            z = np.linspace(-20, 20, self.kmax)[np.newaxis, np.newaxis, :]
+            d1 = np.sqrt(x1 ** 2 + y ** 2 + z ** 2)
+            d2 = 2 * np.sqrt(x1[::-1] ** 2 + y ** 2 + z ** 2)
+            d3 = 4 * np.sqrt(x2 ** 2 + y[:, ::-1] ** 2 + z ** 2)
+            self.data = (np.sin(d1) / d1 ** 2) + (np.sin(d2) / d2 ** 2) + (np.sin(d3) / d3 ** 2)
 
         self.imin = 0
         self.jmin = 0
-        self.kmin = 0
+        self.kmin = 0  
+    
+#        self.imax = self.imax
+#        self.jmax = self.jmax
+#        self.kmax = self.kmax
 
         self.i = int(self.imax/2)
         self.j = int(self.jmax/2)
         self.k = int(self.kmax/2)
-
-        #self.imax = 128
-        #self.jmax = 256
-        #self.kmax = 196
-
-        #x1 = np.linspace(-30, 10, self.imax)[:, np.newaxis, np.newaxis]
-        #x2 = np.linspace(-20, 20, self.imax)[:, np.newaxis, np.newaxis]
-        #y = np.linspace(-30, 10, self.jmax)[np.newaxis, :, np.newaxis]
-        #z = np.linspace(-20, 20, self.kmax)[np.newaxis, np.newaxis, :]
-        #d1 = np.sqrt(x1 ** 2 + y ** 2 + z ** 2)
-        #d2 = 2 * np.sqrt(x1[::-1] ** 2 + y ** 2 + z ** 2)
-        #d3 = 4 * np.sqrt(x2 ** 2 + y[:, ::-1] ** 2 + z ** 2)
-        #self.data = (np.sin(d1) / d1 ** 2) + (np.sin(d2) / d2 ** 2) + (np.sin(d3) / d3 ** 2)
 
         self.showIView(True)
         self.showJView(True)
@@ -151,7 +153,7 @@ class VolSession(SessionBase):
 
             self.iview.slider = QtGui.QSlider(self.iview.toolbar)
             self.iview.slider.setOrientation(QtCore.Qt.Horizontal)
-            self.iview.slider.setRange(self.imin, self.imax)
+            self.iview.slider.setRange(self.imin, self.imax-1)
             self.iview.slider.setValue(self.i)
             self.iview.toolbar.addWidget(self.iview.slider)
             def sliderMoved(v) :
@@ -191,7 +193,7 @@ class VolSession(SessionBase):
 
             self.jview.slider = QtGui.QSlider(self.jview.toolbar)
             self.jview.slider.setOrientation(QtCore.Qt.Horizontal)
-            self.jview.slider.setRange(self.jmin, self.jmax)
+            self.jview.slider.setRange(self.jmin, self.jmax-1)
             self.jview.slider.setValue(self.j)
             self.jview.toolbar.addWidget(self.jview.slider)
             def sliderMoved(v) :
@@ -230,7 +232,7 @@ class VolSession(SessionBase):
 
             self.kview.slider = QtGui.QSlider(self.kview.toolbar)
             self.kview.slider.setOrientation(QtCore.Qt.Horizontal)
-            self.kview.slider.setRange(self.kmin, self.kmax)
+            self.kview.slider.setRange(self.kmin, self.kmax-1)
             self.kview.slider.setValue(self.k)
             self.kview.toolbar.addWidget(self.kview.slider)
             def sliderMoved(v) :
