@@ -1,11 +1,9 @@
 
 
-import pyqtgraph as pg
-from pyqtgraph.Qt import QtCore, QtGui
-import numpy as np
+from pyqtgraph.Qt import QtGui, QtCore
 
-from .Views import *
-from .SessionBase import *
+from .Views import ViewBase
+from .SessionBase import SessionBase
 
 
 class EditSession(SessionBase):
@@ -22,7 +20,7 @@ class EditSession(SessionBase):
 
     def openFile(self, file):
         self.view.clear()
-        text = QtCore.QF;ile(file)
+        text = QtCore.QFile(file)
         text.open(QtCore.QFile.ReadOnly)
         text = text.readAll()
         self.view.setText(str(text))

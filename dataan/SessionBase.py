@@ -1,10 +1,5 @@
 
-import pyqtgraph as pg
-from pyqtgraph.Qt import QtCore, QtGui
-import numpy as np
-
-from .Views import *
-
+from pyqtgraph.Qt import QtCore
 
 class SessionBase(QtCore.QObject) :
     def __init__(self):

@@ -4,9 +4,10 @@ ImageAn
 """
 
 import pyqtgraph as pg
-from pyqtgraph.Qt import QtCore, QtGui
-import numpy as np
-from dataan import *
+from pyqtgraph.Qt import QtGui
+from dataan import SessionMngr
+from dataan import HistView
+from dataan import ViewMngr
 
 class ImageWin(QtGui.QMainWindow) :
     def __init__(self):

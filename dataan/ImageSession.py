@@ -1,11 +1,8 @@
 
 
-import pyqtgraph as pg
-from pyqtgraph.Qt import QtCore, QtGui
-import numpy as np
 
-from .Views import *
-from .SessionBase import *
+from .Views import ImageView
+from .SessionBase import SessionBase
 
 
 class ImageSession(SessionBase):

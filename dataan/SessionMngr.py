@@ -1,12 +1,10 @@
 
 
-import pyqtgraph as pg
-from pyqtgraph.Qt import QtCore, QtGui
-import numpy as np
+from pyqtgraph.Qt import QtGui
 
-from .ImageSession import *
-from .VolSession import *
-from .EditSession import *
+from .ImageSession import ImageSession
+from .VolSession import VolSession
+from .EditSession import EditSession
 
 class SessionMngr(object) :
 
@@ -86,7 +84,7 @@ class SessionMngr(object) :
 #                                                         "Images (*.png *.xpm *.jpg);;"
 #                                                         "Text files (*.txt);;"
 #                                                         "XML files (*.xml)")
-        reg = r".*\((\*\.[0-9A-Za-z]*)( \*\.[0-9A-Za-z]*)*\)"
+        #reg = r".*\((\*\.[0-9A-Za-z]*)( \*\.[0-9A-Za-z]*)*\)"
         fnreg = r".*\.([0-9A-Za-z]*)"
         import re
         ext = re.match(fnreg, file).group(1)
