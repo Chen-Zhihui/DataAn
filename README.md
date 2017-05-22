@@ -3,7 +3,7 @@
 ## dependency:
 
 [pynrrd](https://github.com/mhe/pynrrd)
-[imread]pip install imread
+[imread](https://github.com/luispedro/imread)
 
 ## Screen shot
 
