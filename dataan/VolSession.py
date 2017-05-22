@@ -1,11 +1,11 @@
 
 
-import pyqtgraph as pg
+
 from pyqtgraph.Qt import QtCore, QtGui
 import numpy as np
 
-from .Views import *
-from .ImageSession import *
+from .Views import ImageView
+from .SessionBase import SessionBase
 
 
 class VolSession(SessionBase):
@@ -71,10 +71,10 @@ class VolSession(SessionBase):
             self.jmax = 256
             self.kmax = 196
             
-            x1 = np.linspace(-30, 10, self.imax)[:, np.newaxis, np.newaxis]
-            x2 = np.linspace(-20, 20, self.imax)[:, np.newaxis, np.newaxis]
+            x1 = np.linspace(-30, 10, self.kmax)[:, np.newaxis, np.newaxis]
+            x2 = np.linspace(-20, 20, self.kmax)[:, np.newaxis, np.newaxis]
             y = np.linspace(-30, 10, self.jmax)[np.newaxis, :, np.newaxis]
-            z = np.linspace(-20, 20, self.kmax)[np.newaxis, np.newaxis, :]
+            z = np.linspace(-20, 20, self.imax)[np.newaxis, np.newaxis, :]
             d1 = np.sqrt(x1 ** 2 + y ** 2 + z ** 2)
             d2 = 2 * np.sqrt(x1[::-1] ** 2 + y ** 2 + z ** 2)
             d3 = 4 * np.sqrt(x2 ** 2 + y[:, ::-1] ** 2 + z ** 2)
@@ -83,10 +83,6 @@ class VolSession(SessionBase):
         self.imin = 0
         self.jmin = 0
         self.kmin = 0  
-    
-#        self.imax = self.imax
-#        self.jmax = self.jmax
-#        self.kmax = self.kmax
 
         self.i = int(self.imax/2)
         self.j = int(self.jmax/2)
@@ -129,9 +125,6 @@ class VolSession(SessionBase):
                 v.setWindowTitle(self.name)
 
     def updateIJK(self, i, j, k):
-        self.i =i
-        self.j =j
-        self.k =k
         if self.iview is not None :
             self.iview.updateCW(j,k)
         if self.jview is not None :
@@ -158,6 +151,7 @@ class VolSession(SessionBase):
             self.iview.toolbar.addWidget(self.iview.slider)
             def sliderMoved(v) :
                 self.iview.setImageData(self.data[:, :, v])
+                self.i=v
             self.iview.slider.sliderMoved.connect(sliderMoved)
 
             def mouseMoved(evt) :
@@ -198,6 +192,7 @@ class VolSession(SessionBase):
             self.jview.toolbar.addWidget(self.jview.slider)
             def sliderMoved(v) :
                 self.jview.setImageData(self.data[:, v, :])
+                self.j=v
             self.jview.slider.sliderMoved.connect(sliderMoved)
 
             def mouseMoved(evt) :
@@ -237,6 +232,7 @@ class VolSession(SessionBase):
             self.kview.toolbar.addWidget(self.kview.slider)
             def sliderMoved(v) :
                 self.kview.setImageData(self.data[v, :, :])
+                self.k=v
             self.kview.slider.sliderMoved.connect(sliderMoved)
 
             def mouseMoved(evt) :
