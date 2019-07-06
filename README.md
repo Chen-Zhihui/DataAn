@@ -9,3 +9,9 @@
 
 ![screenshot](./doc/screenshot.png)
 
+## install
+
+## run
+```
+python -m imagepq
+```

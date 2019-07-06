@@ -1,0 +1,39 @@
+
+flake8
+pysnooper
+numpy
+matplotlib
+pylint
+
+# api mngr
+debtcollector
+
+# language
+pytz
+
+# formatter
+pep8
+autopep8
+
+#debug view
+pandas
+jupyter
+ipython
+
+#docs
+sphinx
+recommonmark
+commonmark
+sphinx-autobuild
+doc8
+autodoc
+
+#unittest
+pytest
+fixtures
+
+#setup tools
+entry_point_inspector
+
+pyqtgraph
+pyside2

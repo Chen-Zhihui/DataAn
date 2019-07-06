@@ -1,0 +1,28 @@
+CHANGES
+=======
+
+* move doc
+* add doc
+* fix autodoc
+* doc with sphinx
+* erro for sphinx-build
+* use unittest
+* use sphinx, main page
+* use shpine
+* todo stdlibs
+* install pyltp
+* use wheel
+* ignore .vscode
+* remove .vscode
+* add todos
+* linter
+* use mpld3
+* vscode extension: Git-Graph
+* TODO
+* use matplotlib
+* use pysnopper
+* use venv in proj dir
+* remove .idea
+* Create README.md
+* boilerplate for python package
+* initial commit
