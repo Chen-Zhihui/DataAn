@@ -10,7 +10,8 @@ Welcome to imagepq's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-
+   apis.md
+   imagej.md
 
 Indices and tables
 ==================

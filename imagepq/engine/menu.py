@@ -12,13 +12,17 @@ MENU_WINDOW = "menu.window"
 MENU_HELP = "menu.help"
 
 
-class IPAction(QtCore.QAction) :
-
+class IPAction(QtGui.QAction) :
+    """
+    Base Action show in Menu
+    """
     pass
 
 
-class MenuAction(QtCore.QAction) :
-
+class MenuAction(IPAction) :
+    """
+    Menu
+    """
     pass 
 
 
