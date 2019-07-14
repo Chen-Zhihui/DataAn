@@ -9,7 +9,7 @@
 
 ![screenshot](./doc/ct-slice.png)
 
-![doc](https://imagepq.readthedocs.io/en/latest/)
+[doc](https://imagepq.readthedocs.io/en/latest/)
 
 ## install
 
