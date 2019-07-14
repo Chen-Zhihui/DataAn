@@ -14,3 +14,11 @@
    :undoc-members:
    :show-inheritance:
 ```
+
+```eval_rst
+.. automodule:: imagepq.VolSession
+   :members:
+   :undoc-members:
+   :show-inheritance:
+```
+

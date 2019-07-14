@@ -7,7 +7,9 @@
 
 ## Screen shot
 
-![screenshot](./doc/screenshot.png)
+![screenshot](./doc/ct-slice.png)
+
+![doc](https://imagepq.readthedocs.io/en/latest/)
 
 ## install
 

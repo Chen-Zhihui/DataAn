@@ -11,7 +11,7 @@ Welcome to imagepq's documentation!
    :caption: Contents:
 
    apis.md
-   imagej.md
+   java_and_python.md
 
 Indices and tables
 ==================

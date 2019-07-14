@@ -62,7 +62,7 @@ class SessionMngr(object) :
         sess_dict = dict()
         imageExt = ["png", "jpg", "xpm"]
         txtExt = ["txt", "py"]
-        nrrdExt = ["nrrd"]
+        nrrdExt = ["nrrd", "raw"]
         sess_dict = {ext : se for ext, se
                      in chain(zip(imageExt, map(lambda x : ImageSession, imageExt)),
                               zip(txtExt, map( lambda x : EditSession, txtExt)),
